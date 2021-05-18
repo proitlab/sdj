@@ -11,3 +11,7 @@
 	python manage.py migrate
 	python manage.py createsuperuser
 	python manage.py loaddata Wilayah
+
+# Git pull force
+    git reset --hard HEAD
+    git pull
