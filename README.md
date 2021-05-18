@@ -1,2 +1,3 @@
-# sdj
-Sistem Data Jemaat
+# Sistem Data Jemaat
+
+# How to install
