@@ -3,6 +3,20 @@ from django.forms.widgets import SelectDateWidget
 from data.models import *
 from django.utils.translation import ugettext_lazy
 
+
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+
+class AnggotaResource(resources.ModelResource):
+    class Meta:
+        model = Anggota
+
+
+class KeluargaResource(resources.ModelResource):
+    class Meta:
+        model = Keluarga
+
+
 # Register your models here.
 class WilayahAdmin(admin.ModelAdmin):
     #list_display = ('id_wilayah', 'nama_wilayah')
@@ -16,7 +30,8 @@ class WilayahAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-class KeluargaAdmin(admin.ModelAdmin):
+class KeluargaAdmin(ImportExportModelAdmin):
+    resource_class = KeluargaResource
     list_display = ('kepala_keluarga',)
     icon_name = 'home'
     actions = None
@@ -24,8 +39,9 @@ class KeluargaAdmin(admin.ModelAdmin):
     ordering = ['kepala_keluarga']
     search_fields = ['kepala_keluarga']
 
-class AnggotaAdmin(admin.ModelAdmin):
+class AnggotaAdmin(ImportExportModelAdmin):
     #form = 'AnggotaForm'
+    resource_class = AnggotaResource
     icon_name = 'person'
     formfield_overrides = {models.DateField: {"widget": SelectDateWidget(years=range(1950, 2020))}}
     list_display = ('nomor_anggota', 'nama_anggota', 'wilayah')
