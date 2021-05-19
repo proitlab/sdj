@@ -51,6 +51,7 @@ ETNIK = [
     ('TIONGHOA', 'Tionghoa'),
     ('SASAK', 'Sasak'),
     ('SUNDA', 'Sunda'),
+    ('LAINNYA', 'Lainnya'),
 ]
 
 # Pekerjaan

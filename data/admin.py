@@ -10,16 +10,17 @@ from import_export.admin import ImportExportModelAdmin
 class AnggotaResource(resources.ModelResource):
     class Meta:
         model = Anggota
+        exclude = ('created_at', 'updated_at', )
 
 
 class KeluargaResource(resources.ModelResource):
     class Meta:
         model = Keluarga
-
+        exclude = ('created_at', 'updated_at', )
 
 # Register your models here.
 class WilayahAdmin(admin.ModelAdmin):
-    #list_display = ('id_wilayah', 'nama_wilayah')
+    list_display = ('id', 'nama_wilayah')
     actions = None
     #ordering = ['id_wilayah']
     icon_name = 'map'
@@ -32,7 +33,7 @@ class WilayahAdmin(admin.ModelAdmin):
 
 class KeluargaAdmin(ImportExportModelAdmin):
     resource_class = KeluargaResource
-    list_display = ('kepala_keluarga',)
+    list_display = ('id', 'kepala_keluarga',)
     icon_name = 'home'
     actions = None
 
