@@ -1,15 +1,16 @@
 from django.db import models
+from data_support.models import *
+from django.core.exceptions import ObjectDoesNotExist
 
-# Jenis Kelamin
-LAKILAKI = 'LK'
-PEREMPUAN = 'PR'
 JENIS_KELAMIN = [
-    (LAKILAKI, 'Laki-Laki'),
-    (PEREMPUAN, 'Perempuan'),
+    ('NN', 'None'),
+    ('LAKILAKI', 'Laki-Laki'),
+    ('PEREMPUAN', 'Perempuan'),
 ]
 
 # Golongan Darah
 GOLONGAN_DARAH = [
+    ('NN', 'None'),
     ('A', 'A'),
     ('B', 'B'),
     ('AB', 'AB'),
@@ -17,6 +18,7 @@ GOLONGAN_DARAH = [
 ]
 
 GOLONGAN_DARAH_RHESUS = [
+    ('NN', 'None'),
     ('RP', 'Rhesus Positif'),
     ('RN', 'Rhesus Negatif'),
 ]
@@ -24,80 +26,7 @@ GOLONGAN_DARAH_RHESUS = [
 STATUS_PERNIKAHAN = [
     ('MENIKAH', 'Menikah'),
     ('BELUM_MENIKAH', 'Belum Menikah'),
-    ('CERAI', 'Cerai'),
-]
-
-# https://en.wikipedia.org/wiki/Ethnic_groups_in_Indonesia
-ETNIK = [
-    ('ACEH', 'Aceh'),
-    ('BALI', 'Bali'),
-    ('BANTEN', 'Banten'),
-    ('BANJAR', 'Banjar'),
-    ('BATAK', 'Batak'),
-    ('BETAWI', 'Betawi'),
-    ('BUGIS', 'Bugis'),
-    ('CIREBON', 'Cirebon'),
-    ('DAYAK', 'Dayak'),
-    ('GORONTALO', 'Gorontalo'),
-    ('JAWA', 'Jawa'),
-    ('LAMPUNG', 'Lampung'),
-    ('MADURA', 'Madura'),
-    ('MAKASAR', 'Makasar'),
-    ('MELAYU', 'Melayu'),
-    ('MINAHASA', 'Minahasa'),
-    ('MINANGKABAU', 'Minangkabau'),
-    ('NIAS', 'Nias'),
-    ('PALEMBANG', 'Palembang'),
-    ('TIONGHOA', 'Tionghoa'),
-    ('SASAK', 'Sasak'),
-    ('SUNDA', 'Sunda'),
-    ('LAINNYA', 'Lainnya'),
-]
-
-# Pekerjaan
-PEKERJAAN = [
-    ('PNS', 'PNS'),
-    ('TNI_POLRI', 'TNI/POLRI'),
-    ('KARYAWAN_SWASTA', 'Karyawan Swasta'),
-    ('WIRAUSAHA', 'Wirausaha'),
-    ('PROF_MANDIRI_MEDIS', 'Profesional Mandiri Medis'),
-    ('PROF_MANDIRI_HUKUM', 'Profesional Mandiri Hukum'),
-    ('PROF_MANDIRI_PROYEK', 'Profesional Mandiri Tidak Tetap/Proyek/Konsultan'),
-    ('PENSIUNAN', 'Pensiunan'),
-    ('MAHASISWA', 'Mahasiswa'),
-    ('PELAJAR', 'Pelajar'),
-    ('RUMAH_TANGGA', 'Bapak/Ibu Rumah Tangga'),
-    ('LAINNYA', 'Lainnya'),
-]
-
-# Pendidikan
-PENDIDIKAN = [
-    ('SD', 'SD'),
-    ('SMP', 'SMP'),
-    ('SMA', 'SMA/SPK'),
-    ('D3', 'D3'),
-    ('S1', 'S1'),
-    ('S2', 'S2'),
-    ('S3', 'S3'),
-]
-
-#Minat Pelayanan
-MINAT_PELAYANAN = [
-    ('PADUAN_SUARA', 'Paduan Suara'),
-    ('PEMUSIK', 'Pemusik'),
-    ('MULTIMEDIA', 'Multimedia'),
-    ('FASILITATOR_PA', 'Fasilitator PA'),
-    ('GURU_SEKOLAH_MINGGU', 'Guru Sekolah Minggu'),
-    ('GURU_TUNAS_REMAJA', 'Guru Tunas Remaja'),
-    ('PEMERHATI', 'Pemerhati'),
-    ('KEDUKAAN', 'Kedukaan'),
-    ('PARENTING', 'Parenting'),
-    ('PASUTRI', 'Pasutri'),
-    ('LEKTOR', 'Lektor'),
-    ('PNJ', 'Pemandu Nyanyian Jemaat'),
-    ('PEMAZMUR', 'Pemazmur'),
-    ('DIAKONIA', 'Diakonia'),
-    ('PEMELIHARA_BANGUNAN', 'Pemelihara Bangunan'),
+    ('DUDA_JANDA', 'Duda/Janda'),
 ]
 
 # Status Keanggotaan
@@ -115,40 +44,22 @@ STATUS_KEHIDUPAN = [
 ]
 
 LOKASI_PEMAKAMAN = [
-    ('N_SM', 'Bukan Sari Mulia'),
-    ('Y_SM', 'Sari Mulia'),
+    ('NON_SARIMULIA', 'Bukan Sari Mulia'),
+    ('YES_SARIMULIA', 'Sari Mulia'),
 ]
 
 ALASAN_NON_AKTIF = [
-    ('NONE', 'Tidak Ada Alasan'),
-    ('ATKE', 'Atestasi Keluar'),
-    ('PIKK', 'Pindah Keluar Kota'),
-    ('PIAG', 'Pindah Agama'),
+    ('TIDAK_ADA', 'Tidak Ada Alasan'),
+    ('ALMARHUM', 'Almarhum'),
+    ('ATESTASI_KELUAR', 'Atestasi Keluar'),
+    ('PINDAH_KOTA', 'Pindah Keluar Kota'),
+    ('PINDAH_AGAMA', 'Pindah Agama'),
 ]
 
-# Model Wilayah
-class Wilayah(models.Model):
-    nama_wilayah = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
-
-    class Meta:
-        db_table = 'wilayah'
-        verbose_name_plural = 'Wilayah'
-
-    def __str__(self):
-        return '%s' % self.nama_wilayah
-
-    def clean(self):
-        self.nama_wilayah = self.nama_wilayah.upper()
-
-    def save(self):
-        self.full_clean()
-        return super(Wilayah, self).save(*args, **kwargs)
 
 # Model Keluarga
 class Keluarga(models.Model):
-    kepala_keluarga = models.CharField(max_length=50)
+    nama_kepala_keluarga = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -157,41 +68,47 @@ class Keluarga(models.Model):
         verbose_name_plural = 'Keluarga'
 
     def __str__(self):
-        return "%s" % (self.kepala_keluarga)
+        return "%s" % (self.nama_kepala_keluarga)
 
     def clean(self):
-        self.kepala_keluarga = self.kepala_keluarga.title()
+        s = " ".join(self.nama_kepala_keluarga.split())
+        self.nama_kepala_keluarga = s.title()
 
     def save(self, *args, **kwargs):
         self.full_clean()
         return super(Keluarga, self).save(*args, **kwargs)
 
+
 # Model Anggota
 class Anggota(models.Model):
     nomor_anggota = models.CharField(max_length=10, unique=True)
-    status_anggota = models.CharField(max_length=20, choices=STATUS_KEANGGOTAAN, default='ANGGOTA')
+    status_anggota = models.CharField(max_length=30, choices=STATUS_KEANGGOTAAN, default='ANGGOTA')
+    kepala_keluarga = models.BooleanField(default=False)
+    nama_kepala_keluarga = models.ForeignKey(Keluarga, on_delete=models.PROTECT, null=True, blank=True)
     nama_anggota = models.CharField(max_length=100)
-    tanggal_lahir = models.DateField()
-    tempat_lahir = models.CharField(max_length=50)
+    tanggal_lahir = models.DateField(null=True, blank=True)
+    tempat_lahir = models.CharField(max_length=50, blank=True)
     alamat = models.CharField(max_length=200, blank=True)
     kelurahan = models.CharField(max_length=50, blank=True)
     kecamatan = models.CharField(max_length=50, blank=True)
     kota_kabupaten = models.CharField(max_length=50, blank=True)
     kode_pos = models.CharField(max_length=10, blank=True)
-    kepala_keluarga = models.ForeignKey(Keluarga, on_delete=models.PROTECT)
-    wilayah = models.ForeignKey(Wilayah, on_delete=models.PROTECT)
-    jenis_kelamin = models.CharField(max_length=2, choices=JENIS_KELAMIN, default=LAKILAKI)
+    wilayah = models.ForeignKey(Wilayah, on_delete=models.PROTECT, null=True, blank=True)
+    jenis_kelamin = models.CharField(max_length=15, choices=JENIS_KELAMIN, default='NN')
+    nomor_telp = models.CharField(max_length=30, blank=True)
     nomor_hp = models.CharField(max_length=30, blank=True)
+    nomor_darurat = models.CharField(max_length=30, blank=True)
     alamat_email = models.EmailField(blank=True)
     status_pernikahan = models.CharField(max_length=15, choices=STATUS_PERNIKAHAN, default='MENIKAH')
     status_kehidupan = models.CharField(max_length=15, choices=STATUS_KEHIDUPAN, default='HIDUP')
-    lokasi_pemakaman = models.CharField(max_length=5, choices=LOKASI_PEMAKAMAN, default='N_SM')
+    lokasi_pemakaman = models.CharField(max_length=15, choices=LOKASI_PEMAKAMAN, default='NON_SARIMULIA')
     lokasi_sari_mulia = models.CharField(max_length=50, blank=True)
-    golongan_darah = models.CharField(max_length=2, choices=GOLONGAN_DARAH, default='A')
-    golongan_darah_rhesus = models.CharField(max_length=2, choices=GOLONGAN_DARAH_RHESUS, default='RP')
-    etnik = models.CharField(max_length=15, choices=ETNIK, default='MELAYU')
-    pendidikan = models.CharField(max_length=10, choices=PENDIDIKAN, default='S1')
-    pekerjaan = models.CharField(max_length=30, choices=PEKERJAAN, default='PNS')
+    golongan_darah = models.CharField(max_length=2, choices=GOLONGAN_DARAH, default='NN')
+    golongan_darah_rhesus = models.CharField(max_length=2, choices=GOLONGAN_DARAH_RHESUS, default='NN')
+    etnik = models.ForeignKey(Etnik, on_delete=models.PROTECT, null=True, blank=True)
+    pendidikan = models.ForeignKey(Pendidikan, on_delete=models.PROTECT, null=True, blank=True)
+    profesi = models.ForeignKey(Profesi, on_delete=models.PROTECT, null=True, blank=True)
+    nob = models.ForeignKey(Nob, on_delete=models.PROTECT, null=True, blank=True )
     tanggal_nikah = models.DateField(null=True, blank=True)
     gereja_nikah = models.CharField(max_length=100, blank=True)
     pendeta_nikah = models.CharField(max_length=100, blank=True)
@@ -201,11 +118,14 @@ class Anggota(models.Model):
     tanggal_sidi = models.DateField(null=True, blank=True)
     gereja_sidi = models.CharField(max_length=100, blank=True)
     pendeta_sidi = models.CharField(max_length=100, blank=True)
-    minat_pelayanan = models.CharField(max_length=30, choices=MINAT_PELAYANAN, default='PENATUA')
+    minat_pelayanan = models.ForeignKey(Pelayanan, on_delete=models.PROTECT, null=True, blank=True)
     foto_anggota = models.ImageField(upload_to='images/', blank=True)
     nomor_kartu_parkir = models.CharField(max_length=50, blank=True)
-    alasan_non_aktif = models.CharField(max_length=50, choices=ALASAN_NON_AKTIF, default='NONE')
+    alasan_non_aktif = models.CharField(max_length=50, choices=ALASAN_NON_AKTIF, default='TIDAK_ADA')
     keterangan = models.TextField(blank=True)
+    riwayat_pelayanan = models.TextField(blank=True)
+    gereja_asal = models.CharField(max_length=50, blank=True)
+    verifikasi = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
 
@@ -213,9 +133,66 @@ class Anggota(models.Model):
         return "%s %s" % (self.nomor_anggota, self.nama_anggota)
 
     def clean(self):
-        self.nama_anggota = self.nama_anggota.title()
-        self.nomor_anggota = self.nomor_anggota.upper()
+        #s = " ".join(self.nama_anggota.split())
+        #self.nama_anggota = s.title()
 
+        try:
+            is_nomor = Anggota.objects.get(nomor_anggota__icontains=self.nomor_anggota)
+        except ObjectDoesNotExist:
+            is_nomor = None
+
+        if is_nomor == None:
+            self.nomor_anggota = self.nomor_anggota.upper()
+        else:
+            digit_nomor = int(self.nomor_anggota[1:]) + 8000
+            new_nomor = self.nomor_anggota[:1] + "{:07d}".format(digit_nomor)
+            self.nomor_anggota = new_nomor
+
+        self.nama_anggota = self.nama_anggota.title()
+        self.kelurahan = self.kelurahan.title()
+        self.kecamatan = self.kecamatan.title()
+        self.kota_kabupaten = self.kota_kabupaten.title()
+        self.gereja_sidi = self.gereja_sidi.title()
+        self.gereja_baptis = self.gereja_baptis.title()
+        self.gereja_nikah = self.gereja_nikah.title()
+        self.pendeta_sidi = self.pendeta_sidi.title()
+        self.pendeta_baptis = self.pendeta_baptis.title()
+        self.pendeta_nikah = self.pendeta_nikah.title()
+        self.gereja_asal = self.gereja_asal.title()
+
+        if self.status_kehidupan == 'ALMARHUM':
+            self.status_anggota = 'NON_AKTIF'
+            self.alasan_non_aktif = 'ALMARHUM'
+        
+        if self.alasan_non_aktif == 'ALMARHUM':
+            self.status_kehidupan = 'ALMARHUM'
+            self.status_anggota = 'NON_AKTIF'
+        
+        #self.nama_kepala_keluarga = self.nama_anggota + ' #' + self.nomor_anggota[1:]
+
+        if self.kepala_keluarga == True:
+            if self.nama_kepala_keluarga == None:
+                nama_kk_ok = self.nama_anggota + ' #' + self.nomor_anggota[1:]
+                try:
+                    kk = Keluarga.objects.get(nama_kepala_keluarga__icontains=nama_kk_ok)
+                except ObjectDoesNotExist:
+                    kk = Keluarga.objects.create(
+                        nama_kepala_keluarga = nama_kk_ok
+                    )
+                self.nama_kepala_keluarga = kk
+        '''
+            else:
+                try:
+                    kk = Keluarga.objects.get(nama_kepala_keluarga__icontains=self.nama_kepala_keluarga)
+                except ObjectDoesNotExist:
+                    kk = Keluarga.objects.create(
+                        nama_kepala_keluarga = self.nama_kepala_keluarga
+                    )
+        '''
+
+        
+        #print("%s %s" % (self.nama_kepala_keluarga, self.nama_anggota))
+        
     def save(self, *args, **kwargs):
         self.full_clean()
         return super(Anggota, self).save(*args, **kwargs)

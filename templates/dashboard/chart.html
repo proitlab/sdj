@@ -1,0 +1,118 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js" integrity="sha256-uVEHWRIr846/vAdLJeybWxjPNStREzOlqLMXjW/Saeo=" crossorigin="anonymous"></script>
+
+<div class="col">
+<div class="row mb-3">
+    <div class="col">
+        <h1 class="m-0">Dashboard</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h4 class="card-title">Total Jemaat</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="text-center">{{ total_jemaat}}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h4 class="card-title">Total Keluarga</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="text-center">{{ total_keluarga }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h4 class="card-title">Data Terverifikasi</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="text-center">{{ total_verifikasi }}</h1>
+            </div>
+        </div>
+    </div>
+</div> <!-- rows -->
+
+<div class="row">
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h4 class="card-title">Ratio Gender</h4>
+            </div>
+            <canvas id="chart1" width="100" height="100"></canvas>
+        </div>       
+    </div>
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+            <h4 class="card-title">Ratio Usia</h4>
+        </div>
+        <canvas id="chart2" width="100" height="100"></canvas>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+let ctx1 = document.getElementById("chart1").getContext("2d");
+let total_lk = {{ total_lk }}
+let total_pr = {{ total_pr }}
+let chart1 = new Chart(ctx1, {
+  type: "pie",
+  data: {
+    labels: [
+    'Laki-Laki',
+    'Perempuan',
+  ],
+  datasets: [{
+    label: 'Ratio Gender',
+    data: [total_lk, total_pr],
+    backgroundColor: [
+        'rgb(54, 162, 235)',
+        'rgb(255, 99, 132)',
+    ],
+    hoverOffset: 4
+  }]
+  }
+}); 
+</script> 
+<script>
+let ctx2 = document.getElementById("chart2").getContext("2d");
+let age_up_to_twenty = {{ age_up_to_twenty }}
+let age_twenty_to_forty = {{ age_twenty_to_forty }}
+let age_forty_to_sixties = {{ age_forty_to_sixties }}
+let age_gt_sixties = {{ age_gt_sixties }}
+
+let chart2 = new Chart(ctx2, {
+    type: "pie",
+    data: {
+        labels: [
+        '< 20',
+        '20 - 40',
+        '40 - 60',
+        '60 <',
+    ],
+    datasets: [{
+        label: 'Ratio Usia',
+        data: [age_up_to_twenty, age_twenty_to_forty, age_forty_to_sixties, age_gt_sixties],
+        backgroundColor: [
+            'rgb(76, 175, 80)',
+            'rgb(251, 192, 45)',
+            'rgb(0, 162, 235)',
+            'rgb(255, 99, 0)',
+        ],
+        hoverOffset: 4
+      }]
+    }
+}); 
+</script> 
+{% endblock %}

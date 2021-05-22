@@ -1,3 +1,4 @@
+'''
 from django.http import HttpResponse
 from django.shortcuts import render
 from dashboard.models import Dashboard
@@ -12,3 +13,5 @@ def DashboardView(request):
     return TemplateResponse(request, template, context)
     #return render(request, template, context)
     #return HttpResponse('Admin Custom View')
+    '''
+    

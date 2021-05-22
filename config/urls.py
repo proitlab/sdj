@@ -22,5 +22,5 @@ admin.site.index_title = 'Sistem Data Jemaat'
 
 
 urlpatterns = [
-    path('', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]
