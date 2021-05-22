@@ -1,6 +1,6 @@
 from django.db import models
 
-
+# https://en.wikipedia.org/wiki/Ethnic_groups_in_Indonesia
 class Etnik(models.Model):
     nama_etnik = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
