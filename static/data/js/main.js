@@ -106,6 +106,7 @@ if($('#id_verifikasi').length){
     } else {
         $("#id_verifikasi_badge_ok").show();   
         $("#id_verifikasi_badge_nok").hide();
+        $("#id_verifikasi").prop("readonly", true);;
     }
 }else{
     $("#id_verifikasi_badge_ok").hide();   
