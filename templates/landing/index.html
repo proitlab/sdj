@@ -101,6 +101,7 @@ code {
                             <th scope="col">Nomor</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Wilayah</th>
+                            <th scope="col">Status Data</th>
                           </tr>
                         </thead>
                         {% for anggota in object_list %}
@@ -108,6 +109,11 @@ code {
                               <td>{{ anggota.nomor_anggota }}</td>
                               <td>{{ anggota.nama_anggota }}</td>
                               <td>{{ anggota.wilayah }}</td>
+                              {% if anggota.verifikasi == True %}
+                              <td><span class="badge bg-success">Sudah Verifikasi</span></td>
+                              {% else %}
+                              <td><span class="badge bg-danger">Belum Verifikasi</span></td>
+                              {% endif %}
                           </tr>
                             {% endfor %}
 
