@@ -70,13 +70,15 @@ let chart1 = new Chart(ctx1, {
   type: "pie",
   data: {
     labels: [
-    'Laki-Laki',
-    'Perempuan',
+    {% for gender in list_gender %}
+    "{{ gender }}",
+    {% endfor %}
   ],
   datasets: [{
     label: 'Ratio Gender',
-    data: [total_lk, total_pr],
+    data: [{% for key, value in count_gender.items %}{{ value }},{% endfor %}],
     backgroundColor: [
+        'rgb(99, 99, 99)',
         'rgb(54, 162, 235)',
         'rgb(255, 99, 132)',
     ],

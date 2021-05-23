@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from dashboard.models import *
 from dashboard.views import *
+from dashboard.chart import *
 from django.template.response import TemplateResponse
 
 # Register your models here.
@@ -21,6 +22,8 @@ class ChartAdmin(admin.ModelAdmin):
         total_verifikasi = Anggota.objects.filter(verifikasi=True).count()
         total_lk = Anggota.objects.filter(jenis_kelamin='LAKILAKI').count()
         total_pr = Anggota.objects.filter(jenis_kelamin='PEREMPUAN').count()
+
+        list_gender, count_gender = chart_gender()
         
         from datetime import date
         from dateutil.relativedelta import relativedelta
@@ -51,6 +54,8 @@ class ChartAdmin(admin.ModelAdmin):
             'total_verifikasi': total_verifikasi,
             'total_lk': total_lk,
             'total_pr': total_pr,
+            'list_gender': list_gender,
+            'count_gender': count_gender,
             'age_up_to_twenty': age_up_to_twenty,
             'age_twenty_to_forty': age_twenty_to_forty,
             'age_forty_to_sixties': age_forty_to_sixties,
