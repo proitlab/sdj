@@ -48,7 +48,7 @@ class AnggotaAdmin(ImportExportModelAdmin):
     resource_class = AnggotaResource
     icon_name = 'person'
     formfield_overrides = {models.DateField: {"widget": SelectDateWidget(years=range(1920, 2021))}}
-    list_display = ('nomor_anggota', 'nama_kepala_keluarga', 'nama_anggota', 'tanggal_lahir', 'calculate_age', 'wilayah', 'verifikasi')
+    list_display = ('nomor_anggota', 'nama_kepala_keluarga', 'nama_anggota', 'jenis_kelamin', 'tanggal_lahir', 'calculate_age', 'wilayah', 'verifikasi')
     list_display_links = ('nomor_anggota', 'nama_anggota',)
     #list_filter = ('status_anggota', 'wilayah' )
 
