@@ -28,6 +28,8 @@ class ChartAdmin(admin.ModelAdmin):
         list_etnik, count_etnik = chart_etnik()
         list_blood, count_blood = chart_blood()
         list_marry, count_marry = chart_marry()
+        list_pendidikan, count_pendidikan = chart_pendidikan()
+        
         
         from datetime import date
         from dateutil.relativedelta import relativedelta
@@ -62,6 +64,8 @@ class ChartAdmin(admin.ModelAdmin):
             'count_gender': count_gender,
             'list_profesi': list_profesi,
             'count_profesi': count_profesi,
+            'list_pendidikan': list_pendidikan,
+            'count_pendidikan': count_pendidikan,
             'list_etnik': list_etnik,
             'count_etnik': count_etnik,
             'list_blood': list_blood,

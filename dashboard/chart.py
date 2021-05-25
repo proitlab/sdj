@@ -71,4 +71,17 @@ def chart_profesi():
     return all_profesi, data_profesi
 
 
+# Count Pendidikan
+def chart_pendidikan():
+
+    data_pendidikan = {}
+    all_pendidikan = Pendidikan.objects.all()
+
+    for e in all_pendidikan:
+        count_pendidikan = Anggota.objects.filter(pendidikan=e).count()
+        data_pendidikan[e.nama_pendidikan] = count_pendidikan
+
+    all_pendidikan = list(data_pendidikan.keys())
+    return all_pendidikan, data_pendidikan
+
 

@@ -55,8 +55,18 @@
     </div>
 </div> <!-- rows -->
 
-<!-- Row for Profesi -->
 <div class="row">
+<!-- Row for Pendidikan -->
+    <div class="col">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+            <h4 class="card-title">Ratio Pendidikan</h4>
+        </div>
+        <div id="chartdivPendidikan" style="width: 100%; height: 300px;"></div>
+        </div>
+    </div>
+
+<!-- Row for Profesi -->
     <div class="col">
         <div class="card card-primary card-outline">
             <div class="card-header">
@@ -226,6 +236,29 @@ let chart2 = new Chart(ctx2, {
 }); 
 </script>
 
+
+<script>
+    /* Create Pendidikan chart */
+    am4core.useTheme(am4themes_patterns);   
+    var chartPendidikan = am4core.create("chartdivPendidikan", am4charts.TreeMap);
+    
+    chartPendidikan.data = [
+    {% for key, value in count_pendidikan.items %}
+    {
+      "name": "{{ key }}",
+      "value": {{ value }}
+    }, 
+    {% endfor %}
+    ];
+    
+    /* Define data fields */
+    chartPendidikan.dataFields.value = "value";
+    chartPendidikan.dataFields.name = "name";
+    //chart.legend = new am4charts.Legend();
+    am4core.unuseTheme(am4themes_patterns);
+</script>
+
+
 <script>
 /* Create Profesi chart */
 am4core.useTheme(am4themes_frozen);   
@@ -276,8 +309,8 @@ var chartBlood = am4core.create("chartdivBlood", am4charts.PieChart);
 chartBlood.data = [
 {% for key, value in count_blood.items %}
 {
-    "blood_type": "{{ key }}",
-    "blood_value": {{ value }}
+    "key": "{{ key }}",
+    "value": {{ value }}
 }, 
 {% endfor %}
 ];
@@ -287,8 +320,8 @@ chartBlood.data = [
 chartBlood.legend = new am4charts.Legend();
 // Add and configure Series
 var pieSeries = chartBlood.series.push(new am4charts.PieSeries());
-pieSeries.dataFields.value = "blood_value";
-pieSeries.dataFields.category = "blood_type";
+pieSeries.dataFields.value = "value";
+pieSeries.dataFields.category = "key";
 pieSeries.labels.template.disabled = true;
 //pieSeries.ticks.template.disabled = true;
 //pieSeries.slices.template.tooltipText = "";
