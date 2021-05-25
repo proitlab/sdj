@@ -24,6 +24,10 @@ class ChartAdmin(admin.ModelAdmin):
         total_pr = Anggota.objects.filter(jenis_kelamin='PEREMPUAN').count()
 
         list_gender, count_gender = chart_gender()
+        list_profesi, count_profesi = chart_profesi()
+        list_etnik, count_etnik = chart_etnik()
+        list_blood, count_blood = chart_blood()
+        list_marry, count_marry = chart_marry()
         
         from datetime import date
         from dateutil.relativedelta import relativedelta
@@ -56,6 +60,14 @@ class ChartAdmin(admin.ModelAdmin):
             'total_pr': total_pr,
             'list_gender': list_gender,
             'count_gender': count_gender,
+            'list_profesi': list_profesi,
+            'count_profesi': count_profesi,
+            'list_etnik': list_etnik,
+            'count_etnik': count_etnik,
+            'list_blood': list_blood,
+            'count_blood': count_blood,
+            'list_marry': list_marry,
+            'count_marry': count_marry,
             'age_up_to_twenty': age_up_to_twenty,
             'age_twenty_to_forty': age_twenty_to_forty,
             'age_forty_to_sixties': age_forty_to_sixties,

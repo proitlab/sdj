@@ -2,6 +2,33 @@ from data.models import *
 from data_support.models import *
 
 
+# Count Status Pernikahan
+def chart_marry():
+
+    data_marry = {}
+    all_marry = STATUS_PERNIKAHAN
+
+    for e in all_marry:
+        count_marry = Anggota.objects.filter(status_pernikahan=e[0]).count()
+        data_marry[e[1]] = count_marry
+    
+    all_marry = list(data_marry.keys())
+    return all_marry, data_marry
+
+# Count Golongan Darah
+def chart_blood():
+
+    data_blood = {}
+    all_blood = GOLONGAN_DARAH
+
+    for e in all_blood:
+        count_blood = Anggota.objects.filter(golongan_darah=e[0]).count()
+        data_blood[e[1]] = count_blood
+    
+    all_blood = list(data_blood.keys())
+    return all_blood, data_blood
+
+
 # Count Gender
 def chart_gender():
 
